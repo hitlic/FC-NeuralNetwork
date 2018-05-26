@@ -63,7 +63,8 @@ class CrossEntropyWithSoftmax(object):
     @staticmethod
     def diff(y_hat, y):
         return y_hat - y
-
+    
+    @staticmethod
     def softmax(y_hat):
         e_x = np.exp(y_hat - np.max(y_hat, 0))
         return e_x / e_x.sum(0)
