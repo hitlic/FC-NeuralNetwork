@@ -58,22 +58,28 @@ precs, grad, loss = network.train(train_x, train_y, dev_x, dev_y, 128, 50)  # mi
 p = network.test(test_x, test_y)
 print("测试准确率", p)
 
+# 保存模型
+# save_model(network, './mnist_model.pk')
+
+# 加载模型
+# network = load_model('./mnist_model.pk')
+
 # 画图显示结果
 import matplotlib.pyplot as plt
 fig = plt.figure()
 plt.rcParams['font.sans-serif'] = ['SimSun']  # 设置中文字体，否则中文乱码
 
 plt.subplot(3, 1, 1)  # 上图，2行2列第1幅图
-plt.title("测试准确率:"+str(p), fontsize=15)
-plt.plot(precs, color='g', label="准确率")
+plt.title("Test Precision:"+str(p), fontsize=15)
+plt.plot(precs, color='g', label="precision")
 plt.legend(loc='upper right', frameon=True)
 
 plt.subplot(3, 1, 2)  # 上图，2行2列第1幅图
-plt.plot(grad, color='r', label="梯度")
+plt.plot(grad, color='r', label="gradien")
 plt.legend(loc='upper right', frameon=True)
 
 plt.subplot(3, 1, 3)  # 下图，2行2列第2幅图
-plt.plot(loss, color='b', label="损失")
+plt.plot(loss, color='b', label="loss")
 plt.legend(loc='upper right', frameon=True)
 
 plt.show()

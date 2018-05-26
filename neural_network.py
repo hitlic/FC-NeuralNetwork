@@ -2,11 +2,8 @@
 # author: LiuChen
 
 import numpy as np
-import abc
-import matplotlib.pyplot as plt
-import copy
 import math
-import sys
+import pickle
 
 
 class Sigmoid(object):
@@ -63,7 +60,7 @@ class CrossEntropyWithSoftmax(object):
     @staticmethod
     def diff(y_hat, y):
         return y_hat - y
-    
+
     @staticmethod
     def softmax(y_hat):
         e_x = np.exp(y_hat - np.max(y_hat, 0))
@@ -90,7 +87,7 @@ class Layer(object):
     """
 
     def __init__(self, node_num, activate_fun=None, is_input=False):
-        if activate_fun is None and is_input == False:
+        if activate_fun is None and is_input is False:
             raise Exception("非输入层必须指定激活函数")
         self.dim = node_num
         self.W = None  # 权值矩阵
@@ -369,3 +366,19 @@ class FCNetwork(list):
             wrong_num += np.count_nonzero(np.argmax(predict, 1)-np.argmax(label_batch, 1))
         p = 1 - wrong_num/len(test_data)
         return p
+
+def save_model(model, path):
+    """
+    保存模型
+    """
+    with open(path, 'wb') as f:
+        pickle.dump(model, f)
+
+def load_model(path):
+    """
+    加载模型
+    """
+    model = None
+    with open(path, 'rb') as f:
+        model = pickle.load(f)
+    return model
